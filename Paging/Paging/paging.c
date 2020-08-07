@@ -11,10 +11,10 @@ typedef union vaddr {
 	struct
 	{
 		uint64_t	offset	: 12;	// Offset within a page
-		uint64_t	pte		: 8;	// Level 4 table entry
-		uint64_t	pde		: 8;	// Level 3 table entry
-		uint64_t	pdpte	: 8;	// Level 2 table entry
-		uint64_t	pml4e	: 8;	// Level 1 table entry
+		uint64_t	pte		: 9;	// Level 4 table entry
+		uint64_t	pde		: 9;	// Level 3 table entry
+		uint64_t	pdpte	: 9;	// Level 2 table entry
+		uint64_t	pml4e	: 9;	// Level 1 table entry
 		uint64_t			: 16;	// ...
 	}			stc;	// Structured value
 } vaddr_t;
@@ -146,7 +146,7 @@ int main() {
 	// Open the output file
 	FILE *pout = fopen("results.txt", "w");
 
-	// Perform the queries and flush results every 1000 queries
+	// Perform the queries and flush results every 100 queries
 	for (uint64_t i = 0; i < q; i++) {
 		vaddr_t vaddr;
 		fscanf(pin, "%llu", &vaddr.val);
@@ -159,7 +159,7 @@ int main() {
 			fprintf(pout, "%llu\n", paddr);
 		}
 
-		if (i % 1000 == 0) {
+		if (i % 100 == 0) {
 			fflush(pout);
 		}
 	}
